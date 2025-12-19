@@ -12,6 +12,19 @@ import { PMServer } from './servers/pm-server.js';
 import { AgentsServer } from './servers/agents-server.js';
 import { Logger, LogLevel } from './utils/logger.js';
 
+/**
+ * Parse log level string to LogLevel enum
+ */
+function parseLogLevel(level: string): LogLevel {
+  switch (level.toLowerCase()) {
+    case 'error': return LogLevel.ERROR;
+    case 'warn': return LogLevel.WARN;
+    case 'info': return LogLevel.INFO;
+    case 'debug': return LogLevel.DEBUG;
+    default: return LogLevel.INFO;
+  }
+}
+
 const program = new Command();
 
 program
@@ -31,7 +44,7 @@ program
 
     const logger = new Logger({
       name: 'AutoPM-PM',
-      level: globalOptions.logLevel as LogLevel,
+      level: parseLogLevel(globalOptions.logLevel),
     });
 
     try {
@@ -42,7 +55,7 @@ program
       const server = new PMServer({
         name: 'autopm-pm',
         version: '1.0.0',
-        logLevel: globalOptions.logLevel as LogLevel,
+        logLevel: parseLogLevel(globalOptions.logLevel),
         enableContext7: globalOptions.enableContext7,
       });
       console.log('CLI: PMServer created successfully');
@@ -64,7 +77,7 @@ program
 
     const logger = new Logger({
       name: 'AutoPM-Agents',
-      level: globalOptions.logLevel as LogLevel,
+      level: parseLogLevel(globalOptions.logLevel),
     });
 
     try {
@@ -73,7 +86,7 @@ program
       const server = new AgentsServer({
         name: 'autopm-agents',
         version: '1.0.0',
-        logLevel: globalOptions.logLevel as LogLevel,
+        logLevel: parseLogLevel(globalOptions.logLevel),
         enableContext7: globalOptions.enableContext7,
       });
 
@@ -95,7 +108,7 @@ program
 
     const logger = new Logger({
       name: 'AutoPM-All',
-      level: globalOptions.logLevel as LogLevel,
+      level: parseLogLevel(globalOptions.logLevel),
     });
 
     logger.info('Starting both PM and Agents MCP servers...');
@@ -106,7 +119,7 @@ program
       const pmServer = new PMServer({
         name: 'autopm-pm',
         version: '1.0.0',
-        logLevel: globalOptions.logLevel as LogLevel,
+        logLevel: parseLogLevel(globalOptions.logLevel),
         enableContext7: globalOptions.enableContext7,
       });
       await pmServer.start();
