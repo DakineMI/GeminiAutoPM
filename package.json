@@ -5,7 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "gemini-autopm": "dist/index.js"
+    "gemini-autopm": "dist/index.js",
+    "autopm-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -13,7 +14,12 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "start:pm": "npm run build && node dist/index.js pm",
+    "start:agents": "npm run build && node dist/index.js agents",
+    "start:all": "npm run build && node dist/index.js all",
+    "mcp:pm": "npm run start:pm",
+    "mcp:agents": "npm run start:agents"
   },
   "keywords": [
     "gemini-cli",
@@ -38,6 +44,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.4",
     "@types/fs-extra": "^11.0.4",
+    "commander": "^12.1.0",
     "fs-extra": "^11.3.2",
     "gray-matter": "^4.0.3",
     "zod": "^3.24.1"
