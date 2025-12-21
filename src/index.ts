@@ -40,7 +40,7 @@ program
   .option('--port <port>', 'Port for HTTP transport (if enabled)', '8080')
   .action(async (options: any, cmd: any) => {
     const globalOptions = cmd.parent.opts();
-    console.log('CLI: Starting PM server command...');
+    console.error('CLI: Starting PM server command...');
 
     const logger = new Logger({
       name: 'AutoPM-PM',
@@ -48,17 +48,17 @@ program
     });
 
     try {
-      console.log('CLI: Created logger');
+      console.error('CLI: Created logger');
       logger.info('Starting Project Management MCP Server...');
 
-      console.log('CLI: Creating PMServer...');
+      console.error('CLI: Creating PMServer...');
       const server = new PMServer({
         name: 'autopm-pm',
         version: '1.0.0',
         logLevel: parseLogLevel(globalOptions.logLevel),
         enableContext7: globalOptions.enableContext7,
       });
-      console.log('CLI: PMServer created successfully');
+      console.error('CLI: PMServer created successfully');
 
       await server.start();
       logger.info('Project Management server started successfully');
@@ -132,12 +132,12 @@ program
 
 // Handle graceful shutdown
 process.on('SIGINT', () => {
-  console.log('\nReceived SIGINT, shutting down gracefully...');
+  console.error('\nReceived SIGINT, shutting down gracefully...');
   process.exit(0);
 });
 
 process.on('SIGTERM', () => {
-  console.log('\nReceived SIGTERM, shutting down gracefully...');
+  console.error('\nReceived SIGTERM, shutting down gracefully...');
   process.exit(0);
 });
 
