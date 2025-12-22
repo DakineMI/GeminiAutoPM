@@ -29,6 +29,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
 
+# Ensure the non-root user can write to /app (required for pm_init)
+RUN chown -R nextjs:nodejs /app
+
 USER nextjs
 
 # Expose port if needed (for non-MCP modes)
