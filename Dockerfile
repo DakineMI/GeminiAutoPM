@@ -34,5 +34,8 @@ USER nextjs
 # Expose port if needed (for non-MCP modes)
 EXPOSE 3000
 
+# Entrypoint for the application
+ENTRYPOINT ["node", "dist/index.js"]
+
 # Default command - run in MCP mode
-CMD ["node", "dist/index.js", "pm"]
+CMD ["pm"]
